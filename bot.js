@@ -6,6 +6,9 @@ const axios = require('axios');
 const YahooFinance = require('yahoo-finance2').default;
 const yahooFinance = new YahooFinance({ suppressNotices: ['yahooSurvey'] });
 const { checkBook } = require('./check-book');
+import { execSync } from "child_process";
+
+const chromiumPath = execSync("which chromium").toString().trim();
 
 // Fungsi utama bot
 async function start(client) {
@@ -1081,6 +1084,18 @@ wa.ev.on('qr.**', async (qrcode, sessionId) => {
 });
 
 // Jalankan bot
+// wa.create({
+//   sessionId: 'bot-wa-saya',
+//   multiDevice: true,
+//   authTimeout: 60,
+//   headless: true,
+//   qrTimeout: 0,
+//   disableSpins: true,
+//   logConsole: false,
+//   useChrome: true
+// })
+//   .then(client => start(client))
+//   .catch(error => console.error('❌ Error:', error));
 wa.create({
   sessionId: 'bot-wa-saya',
   multiDevice: true,
@@ -1089,7 +1104,13 @@ wa.create({
   qrTimeout: 0,
   disableSpins: true,
   logConsole: false,
-  useChrome: true
+  useChrome: true,
+  executablePath: chromiumPath,
+  chromiumArgs: [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-gpu",
+  ]
 })
   .then(client => start(client))
   .catch(error => console.error('❌ Error:', error));
