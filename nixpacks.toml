@@ -3,10 +3,13 @@ NODE_VERSION = "20"
 nixPkgs = ["chromium"]
 
 [phases.install]
-cmds = [
-  "PUPPETEER_SKIP_DOWNLOAD=true",
-  "npm install"
-]
+# ⚠️ Jangan jalankan npm install di sini!
+# Cukup set skip download puppeteer
+env = { PUPPETEER_SKIP_DOWNLOAD = "true" }
+
+[phases.build]
+# kosongkan saja
+cmds = []
 
 [start]
 cmd = "node bot.js"
