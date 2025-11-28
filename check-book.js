@@ -8,12 +8,16 @@ const FOLDER_ID = '1AvdFg9yLWyQg9UL1jKJUNU6KESjd-ugO';
 async function checkBook(bookTitle) {
   try {
     // Load credentials
-    const credentials = JSON.parse(fs.readFileSync('credentials.json'));
+    const credentials = require('./google-auth').getCredentials();
+    if (!credentials) throw new Error('Credentials not found');
+
     const { client_secret, client_id, redirect_uris } = credentials.installed || credentials.web;
     const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
     // Load token
-    const token = JSON.parse(fs.readFileSync('token.json'));
+    const token = require('./google-auth').getToken();
+    if (!token) throw new Error('Token not found');
+
     oAuth2Client.setCredentials(token);
 
     const drive = google.drive({ version: 'v3', auth: oAuth2Client });
@@ -26,10 +30,10 @@ async function checkBook(bookTitle) {
     });
 
     const files = response.data.files;
-    
+
     // Cari buku yang cocok
     const bookTitleLower = bookTitle.toLowerCase();
-    const foundBook = files.find(file => 
+    const foundBook = files.find(file =>
       file.name.toLowerCase().includes(bookTitleLower)
     );
 
