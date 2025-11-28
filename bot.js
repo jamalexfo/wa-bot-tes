@@ -6,9 +6,6 @@ const axios = require('axios');
 const YahooFinance = require('yahoo-finance2').default;
 const yahooFinance = new YahooFinance({ suppressNotices: ['yahooSurvey'] });
 const { checkBook } = require('./check-book');
-import { execSync } from "child_process";
-
-const chromiumPath = execSync("which chromium").toString().trim();
 
 // Fungsi utama bot
 async function start(client) {
