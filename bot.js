@@ -1102,7 +1102,6 @@ wa.create({
   disableSpins: true,
   logConsole: false,
   useChrome: true,
-  executablePath: chromiumPath,
   chromiumArgs: [
     "--no-sandbox",
     "--disable-setuid-sandbox",
