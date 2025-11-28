@@ -1,11 +1,12 @@
 [phases.setup]
 NODE_VERSION = "20"
+nixPkgs = ["chromium"]
 
 [phases.install]
-cmds = ["npm install"]
-
-[phases.build]
-cmds = []
+cmds = [
+  "PUPPETEER_SKIP_DOWNLOAD=true",
+  "npm install"
+]
 
 [start]
 cmd = "node bot.js"
