@@ -1118,6 +1118,18 @@ wa.ev.on('qr.**', async (qrcode, sessionId) => {
 });
 
 // Jalankan bot
+// wa.create({
+//   sessionId: 'bot-wa-saya',
+//   multiDevice: true,
+//   authTimeout: 60,
+//   headless: true,
+//   qrTimeout: 0,
+//   disableSpins: true,
+//   logConsole: false,
+//   useChrome: true
+// })
+//   .then(client => start(client))
+//   .catch(error => console.error('❌ Error:', error));
 wa.create({
   sessionId: 'bot-wa-saya',
   multiDevice: true,
@@ -1126,7 +1138,12 @@ wa.create({
   qrTimeout: 0,
   disableSpins: true,
   logConsole: false,
-  useChrome: true
+  useChrome: true,
+  chromiumArgs: [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-gpu",
+  ]
 })
   .then(client => start(client))
   .catch(error => console.error('❌ Error:', error));
